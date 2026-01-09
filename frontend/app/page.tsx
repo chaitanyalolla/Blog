@@ -42,11 +42,6 @@ export default function Home() {
     setShowModal(false);
   };
 
-  const handleLogout = () => {
-    logout();
-    router.push("/login");
-  };
-
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -63,14 +58,8 @@ export default function Home() {
   }
 
   return (
-    <div
-      className={`${theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"} p-2`}
-    >
-      <div className="flex justify-between items-center mb-8">
-        <div>
-          <h1 className="text-4xl font-bold text-gray-800">BlogApp</h1>
-          <p className="text-sm text-gray-600 mt-1">Welcome, {user?.name}</p>
-        </div>
+    <div>
+      <div className="flex justify-end items-center mb-8">
         <div className="flex gap-3">
           <Link
             href="/articles/new"
@@ -78,26 +67,13 @@ export default function Home() {
           >
             New Article
           </Link>
-          <button onClick={toggleTheme} className="cursor-pointer">
-            {theme === "light" ? (
-              <MoonIcon className="size-6" />
-            ) : (
-              <SunIcon className="size-6" />
-            )}
-          </button>
-          <button
-            onClick={handleLogout}
-            className="bg-gray-600 hover:bg-gray-700 text-white font-semibold px-6 py-2 rounded-lg transition-colors cursor-pointer"
-          >
-            Logout
-          </button>
         </div>
       </div>
 
       <div className="space-y-6">
         {articles.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-gray-600 text-lg">
+            <p className="text-lg">
               No articles yet. Create your first article!
             </p>
           </div>
@@ -105,7 +81,7 @@ export default function Home() {
           articles.map((article) => (
             <div
               key={article.id}
-              className="border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow bg-white"
+              className="border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow"
             >
               <div className="flex justify-between">
                 <Link href={`/articles/${article.id}/edit`}>
@@ -120,7 +96,7 @@ export default function Home() {
                   Delete Article
                 </button>
               </div>
-              <p className="text-gray-700 mb-4 leading-relaxed">
+              <p className="mb-4 leading-relaxed">
                 {article.body.substring(0, 200)}
                 {article.body.length > 200 && "..."}
               </p>
@@ -134,7 +110,7 @@ export default function Home() {
                 >
                   {article.published ? "Published" : "Draft"}
                 </span>
-                <span className="text-gray-500">
+                <span className="">
                   {new Date(article.created_at).toLocaleDateString("en-US", {
                     year: "numeric",
                     month: "long",
